@@ -1,0 +1,28 @@
+name: notification_tutorial
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+ 
+  cupertino_icons: ^0.1.3
+  #to get cloud messages
+  firebase_messaging: ^7.0.0
+  #to push notification when app is in foreground
+  flutter_local_notifications: ^1.4.4+4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+ 
