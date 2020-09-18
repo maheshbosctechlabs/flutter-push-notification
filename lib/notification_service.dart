@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -89,6 +90,9 @@ class NotificationService {
 
   Future<void> _onMessage(Map<String, dynamic> message) async {
     print('onMessage: $message');
+    if(Platform.isIOS){
+      message = _modifyNotificationJson(message);
+    }
     _showNotification(
       {
         "title": message['notification']['title'],
@@ -102,6 +106,9 @@ class NotificationService {
 
   Future<void> _onLaunch(Map<String, dynamic> message) {
     print('onLaunch: $message');
+    if(Platform.isIOS){
+      message = _modifyNotificationJson(message);
+    }
     _performActionOnNotification(message);
     return null;
   }
@@ -110,12 +117,19 @@ class NotificationService {
 
   Future<void> _onResume(Map<String, dynamic> message) {
     print('onResume: $message');
+    if(Platform.isIOS){
+      message = _modifyNotificationJson(message);
+    }
     _performActionOnNotification(message);
     return null;
   }
 
-
-
+  /// This method will modify the message format of iOS Notification Data
+  Map _modifyNotificationJson(Map<String, dynamic> message) {
+    message['data'] = Map.from(message ?? {});
+    message['notification'] = message['aps']['alert'];
+    return message;
+  }
 
   
 
